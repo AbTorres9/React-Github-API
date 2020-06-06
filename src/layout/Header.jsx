@@ -15,6 +15,12 @@ import { Link } from "react-router-dom";
 import { UserContext } from "../context/UserContext";
 
 const Header = () => {
+  const context = useContext(UserContext);
+
+  //NAVBAR TOGGLER FUNCTIONING
+  const [isOpen, setIsOpen] = useState(false);
+  const toggle = () => setIsOpen(!isOpen);
+
   return (
     <>
       <Navbar color="info" light expand="md">
@@ -23,18 +29,32 @@ const Header = () => {
             <strong>Git Extractor</strong>
           </Link>
         </NavbarBrand>
-        <NavbarToggler />
-        <Collapse navbar>
+        <NavbarText className="text-white">
+          {context.user?.email ? context.user.email : ""}
+        </NavbarText>
+        <NavbarToggler onClick={toggle} />
+        <Collapse isOpen={isOpen} navbar>
           <Nav className="ml-auto" navbar>
-            <NavItem>
-              <NavLink className="text-white">Sign Up</NavLink>
-            </NavItem>
-            <NavItem>
-              <NavLink className="text-white">Sign In</NavLink>
-            </NavItem>
-            <NavItem>
-              <NavLink className="text-white">Logout</NavLink>
-            </NavItem>
+            {context.user ? (
+              <NavItem>
+                <NavLink tag={Link} to="/" className="text-white">
+                  Logout
+                </NavLink>
+              </NavItem>
+            ) : (
+              <>
+                <NavItem>
+                  <NavLink tag={Link} to="/" className="text-white">
+                    Sign Up
+                  </NavLink>
+                </NavItem>
+                <NavItem>
+                  <NavLink tag={Link} to="/" className="text-white">
+                    Sign In
+                  </NavLink>
+                </NavItem>
+              </>
+            )}
           </Nav>
         </Collapse>
       </Navbar>
