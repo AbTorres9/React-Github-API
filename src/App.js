@@ -23,6 +23,11 @@ import { UserContext } from "./context/UserContext";
 import Footer from "./layout/Footer";
 import Header from "./layout/Header";
 
+import firebaseConfig from "./config/firebaseConfig";
+
+//INITIALIZING FIREBASE
+firebase.initializeApp(firebaseConfig);
+
 const App = () => {
   const [user, setUser] = useState(null);
 
